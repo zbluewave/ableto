@@ -1,0 +1,128 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Ableto test swagger documented API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/human/search": {
+            "get": {
+                "description": "Returns a user based on a single ID, if the user does not have access to the pet",
+                "operationId": "search hummans",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "characters to search in first name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "characters to search in last name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "age",
+                        "in": "query",
+                        "description": "age of the person to search",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "gender",
+                        "in": "query",
+                        "description": "gender of the person to search",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "male",
+                            "female"
+                        ]
+                    },
+                    {
+                        "name": "after_id",
+                        "in": "query",
+                        "description": "for pagination return results after this id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search response",
+                        "schema": {
+                            "properties": {
+                                "total": {
+                                    "description": "total record found",
+                                    "type": "integer"
+                                },
+                                "data_size": {
+                                    "description": "number of records returned",
+                                    "type": "integer"
+                                },
+                                "last_id": {
+                                    "description": "use this id for next page search",
+                                    "type": "integer"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "data",
+                                        "$ref": "#/definitions/human"
+                                    }
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "human": {
+            "required": [
+                "id",
+                "first_name",
+                "last_name",
+                "age",
+                "gender"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string",
+                    "$ref": "#/definitions/gender"
+                },
+                "age": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "gender": {
+            "description": "gender of human",
+            "type": "string",
+            "enum": [
+                "male",
+                "female"
+            ]
+        }
+    }
+}
